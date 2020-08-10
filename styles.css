@@ -53,3 +53,23 @@ body {
   font-family: "Bungee Shade", cursive;
   text-align: center;
 }
+
+#controls {
+  margin: 5rem auto 1rem auto;
+  background-color: transparent;
+  padding: 1rem;
+  max-width: 60rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+select {
+  text-transform: capitalize;
+}

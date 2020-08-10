@@ -51,3 +51,57 @@ const fetchAndShowResponses = async () => {
 };
 
 fetchAndShowResponses();
+
+const countrySelect = document.querySelector('#country');
+const brandSelect = document.querySelector('#brand');
+const searchInput = document.querySelector('#search');
+
+const responseFilter = response => {
+  const selectedCountry = countrySelect.value;
+  const selectedBrand = brandSelect.value;
+  const searchTerm = searchInput.value.toLowerCase();
+
+  return (
+    (selectedCountry === 'all' || response.country === selectedCountry) &&
+    (selectedBrand === 'all' || response.brand === selectedBrand) &&
+    (response.name.toLowerCase().includes(searchTerm) ||
+      response.currentPosition.toLowerCase.includes(searchTerm) ||
+      response.currentDepartment.toLowerCase.includes(searchTerm) ||
+      response.futureDepartment.toLowerCase.includes(searchTerm) ||
+      response.futureCountry.toLowerCase.includes(searchTerm))
+  );
+};
+
+const handleFilterInput = () => {
+  const filteredResponses = responses.filter(responseFilter);
+  main.innerHTML = filteredResponses.map(renderUserResponse).join('');
+};
+
+countrySelect.addEventListener('input', handleFilterInput);
+brandSelect.addEventListener('input', handleFilterInput);
+searchInput.addEventListener('input', handleFilterInput);
+
+const question = 'Which country do you currently work in?';
+
+const votes = {
+  "🇨🇦": 0;
+  "🇺🇸": 0;
+}
+
+responses.forEach(response => {
+  votes[response[question]]+= 1
+})
+
+🇨🇦Span.textContent = votes ["🇨🇦"];
+🇺🇸Span.textContent = votes ["🇺🇸"];
+
+new Chart("pie-chart", {
+  type: 'pie',
+  data: {
+    datasets: [{
+      data: Object.values(votes),
+      backgroundColor: ["whitesmoke", "salmon", "grey"]
+    }],
+    labels: Object.keys(votes)
+  }
+})
